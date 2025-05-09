@@ -1,0 +1,6 @@
+tokens {
+    =
+
+    _identifier
+    _string_literal
+}
