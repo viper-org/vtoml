@@ -1,5 +1,9 @@
 tokens toml {
     =
+    
+    [
+    ]
+    ,
 
     _identifier
     _string_literal

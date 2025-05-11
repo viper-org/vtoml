@@ -94,6 +94,9 @@ namespace toml
         {
             case lexer::TokenType::StringLiteral:
                 return parseStringValue();
+
+            case lexer::TokenType::LeftBracket:
+                return parseArrayValue();
             
             // TODO: Other value types
 
@@ -108,5 +111,27 @@ namespace toml
         std::string value(consume().getText());
 
         return std::make_unique<StringValue>(std::move(value));
+    }
+
+    ArrayValuePtr Parser::parseArrayValue()
+    {
+        std::vector<ValuePtr> values;
+
+        expectToken(lexer::TokenType::LeftBracket);
+        consume();
+
+        while (current().getTokenType() != lexer::TokenType::RightBracket)
+        {
+            values.push_back(parseValue());
+
+            if (current().getTokenType() != lexer::TokenType::RightBracket)
+            {
+                expectToken(lexer::TokenType::Comma);
+                consume();
+            }
+        }
+        consume();
+
+        return std::make_unique<ArrayValue>(std::move(values));
     }
 }

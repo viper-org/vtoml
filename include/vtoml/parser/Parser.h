@@ -40,6 +40,7 @@ namespace toml
 
         ValuePtr parseValue();
         StringValuePtr parseStringValue();
+        ArrayValuePtr parseArrayValue();
     };
 }
 
